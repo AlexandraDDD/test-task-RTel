@@ -1,23 +1,45 @@
 require: slotfilling/slotFilling.sc
   module = sys.zb-common
+
 theme: /
 
-    state: Start
-        q!: $regex</start>
-        a: Let's start.
+state: Start
+    q!: $regex</start>
+    a: Hello! Let's begin by reviewing your vocabulary. Please translate the following English words into Russian.
+    script: GenerateWord
+    go!: Translate
 
-    state: Hello
-        intent!: /hello
-        a: Hello hello
+state: Translate
+    a: {{$session.word_to_translate}}
+    expect: UserAnswer
 
-    state: Bye
-        intent!: /bye
-        a: Bye bye
+state: UserAnswer
+    q!: $any
+    script: CheckAnswer
+    go!:
+      - when: $session.correct
+        to: Correct
+      - otherwise: Wrong
 
-    state: NoMatch
-        event!: noMatch
-        a: I do not understand. You said: {{$request.query}}
+state: Correct
+    a: Correct! Nice!
+    script: CheckFinish
 
-    state: Match
-        event!: match
-        a: {{$context.intent.answer}}
+state: Wrong
+    a: Wrong :( Some of the possible translations for "{{$session.word_to_translate}}" are: {{$session.correct_translations}}
+    script: CheckFinish
+
+state: NextWord
+    a: The next word is "{{$session.word_to_translate}}"
+    go!: Translate
+
+state: Finish
+    a: Correct answers: {{$session.correct_count}}.
+       Wrong answers: {{$session.wrong_count}}.
+       Goodbye, see you later!
+    end: true
+
+state: NoMatch
+    event!: noMatch
+    a: I do not understand. You said: {{$request.query}}
+
