@@ -1,6 +1,6 @@
 function GenerateWord(ctx, event) {
-    const words = ["apple", "book", "cat", "dog", "sun"];
-    const randomIndex = Math.floor(Math.random() * words.length);
+    var words = ["apple", "book", "cat", "dog", "sun"];
+    var randomIndex = Math.floor(Math.random() * words.length);
     ctx.session.word_to_translate = words[randomIndex];
     ctx.session.correct_count = ctx.session.correct_count || 0;
     ctx.session.wrong_count = ctx.session.wrong_count || 0;
@@ -8,11 +8,11 @@ function GenerateWord(ctx, event) {
 }
 
 async function CheckAnswer(ctx, event, api) {
-    const userAnswer = event.payload.text.toLowerCase();
-    const word = ctx.session.word_to_translate;
+    var userAnswer = event.payload.text.toLowerCase();
+    var word = ctx.session.word_to_translate;
     
-    const response = await api.fetch(`https://dictionary.skyeng.ru/api/public/v1/words/search?search=${word}`);
-    const data = await response.json();
+    var response = await api.fetch(`https://dictionary.skyeng.ru/api/public/v1/words/search?search=${word}`);
+    var data = await response.json();
 
     if (!data.length) {
         ctx.session.correct = false;
@@ -20,7 +20,7 @@ async function CheckAnswer(ctx, event, api) {
         return;
     }
 
-    const meanings = data[0].meanings.slice(0, 5).map(m => m.translation.text.toLowerCase());
+    var meanings = data[0].meanings.slice(0, 5).map(m => m.translation.text.toLowerCase());
     ctx.session.correct_translations = meanings.join(", ");
     ctx.session.correct = meanings.includes(userAnswer);
 
