@@ -14,7 +14,7 @@ theme: /
         a: {{$session.word_to_translate}}
         q!: $regex<.+>
         script: CheckAnswer
-        if: $session.correct()
+        if: $session.correct
             go!: /Correct
         else:
             go!: /Wrong 
