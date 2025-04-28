@@ -8,16 +8,19 @@ theme: /
         q!: $regex</start>
         a: Hello! Let's begin by reviewing your vocabulary. Please translate the following English words into Russian.
         script: GenerateWord
+        script: log($session.word_to_translate)
         a: {{$session.word_to_translate}}
-        go!: /Translate
+        go: /Translate
 
     state: Translate
-        q!: $regex<.+>    
-        script: CheckAnswer
+        q!: $regex<.+>
+        script:
+            CheckAnswer
         if: $session.correct
             go!: /Correct
-        else:
-            go!: /Wrong 
+        else: 
+            go!: /Wrong
+        event: noMatch || toState = "./"
 
     state: Correct
         a: Correct! Nice!
