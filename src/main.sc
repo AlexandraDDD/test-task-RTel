@@ -12,8 +12,7 @@ theme: /
         go!: /Translate
 
     state: Translate
-       
-        q!: *
+        q!: $regex<.+>    
         script: CheckAnswer
         if: $session.correct
             go!: /Correct
