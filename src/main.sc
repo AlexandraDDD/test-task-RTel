@@ -8,7 +8,7 @@ theme: /
         q!: $regex</start>
         a: Hello! Let's begin by reviewing your vocabulary. Please translate the following English words into Russian.
         script: GenerateWord
-        go!: Translate
+        go!: /Translate
 
     state: Translate
         a: {{$session.word_to_translate}}
