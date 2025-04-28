@@ -10,7 +10,7 @@ theme: /
 
     state: Translate
         a: {{$session.word_to_translate}}
-        q!: $any
+        q!: $regex<.+>
         script: CheckAnswer
         go!: Correct when $session.correct
         go!: Wrong otherwise
