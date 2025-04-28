@@ -1,4 +1,3 @@
-require: slotfilling/slotFilling.sc
 theme: /
 
 state: Start
