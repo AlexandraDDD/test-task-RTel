@@ -14,22 +14,22 @@ theme: /
         a: {{$session.word_to_translate}}
         q!: $regex<.+>
         script: CheckAnswer
-        go!: Correct when $session.correct === true
-        go!: Wrong when $session.correct !== true
+        go!: /Correct when $session.correct === true
+        go!: /Wrong when $session.correct !== true
 
     state: Correct
         a: Correct! Nice!
         script: CheckFinish
-        go!: NextWord
+        go!: /NextWord
 
     state: Wrong
         a: Wrong :( Some of the possible translations for "{{$session.word_to_translate}}" are: {{$session.correct_translations}}
         script: CheckFinish
-        go!: NextWord
+        go!: /NextWord
 
     state: NextWord
         a: The next word is "{{$session.word_to_translate}}"
-        go!: Translate
+        go!: /Translate
 
     state: Finish
         a: Correct answers: {{$session.correct_count}}. Wrong answers: {{$session.wrong_count}}. Goodbye, see you later!
