@@ -1,10 +1,9 @@
 require: slotfilling/slotFilling.sc
-  module = sys.zb-common
-  
+    module = sys.zb-common
 require: functions.js
 
 theme: /
-    
+
     state: Start
         q!: $regex</start>
         a: Hello! Let's begin by reviewing your vocabulary. Please translate the following English words into Russian.
@@ -15,16 +14,18 @@ theme: /
         a: {{$session.word_to_translate}}
         q!: $regex<.+>
         script: CheckAnswer
-        go!: Correct when $session.correct
-        go!: Wrong otherwise
+        go!: Correct when $session.correct === true
+        go!: Wrong when $session.correct !== true
 
     state: Correct
         a: Correct! Nice!
         script: CheckFinish
+        go!: NextWord
 
     state: Wrong
         a: Wrong :( Some of the possible translations for "{{$session.word_to_translate}}" are: {{$session.correct_translations}}
         script: CheckFinish
+        go!: NextWord
 
     state: NextWord
         a: The next word is "{{$session.word_to_translate}}"
