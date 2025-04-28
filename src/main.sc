@@ -12,7 +12,7 @@ theme: /
 
     state: Translate
         a: {{$session.word_to_translate}}
-        q!: $regex<.+>
+        q!: *
         script: CheckAnswer
         if: $session.correct
             go!: /Correct
