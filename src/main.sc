@@ -1,6 +1,4 @@
 require: slotfilling/slotFilling.sc
-  module = sys.zb-common
-
 theme: /
 
 state: Start
@@ -11,15 +9,10 @@ state: Start
 
 state: Translate
     a: {{$session.word_to_translate}}
-    expect: UserAnswer
-
-state: UserAnswer
     q!: $any
     script: CheckAnswer
-    go!:
-      - when: $session.correct
-        to: Correct
-      - otherwise: Wrong
+    go!: Correct when $session.correct
+    go!: Wrong otherwise
 
 state: Correct
     a: Correct! Nice!
@@ -34,12 +27,9 @@ state: NextWord
     go!: Translate
 
 state: Finish
-    a: Correct answers: {{$session.correct_count}}.
-       Wrong answers: {{$session.wrong_count}}.
-       Goodbye, see you later!
-    end: true
+    a: Correct answers: {{$session.correct_count}}. Wrong answers: {{$session.wrong_count}}. Goodbye, see you later!
+    go!: END
 
 state: NoMatch
     event!: noMatch
     a: I do not understand. You said: {{$request.query}}
-
