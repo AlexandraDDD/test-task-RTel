@@ -33,8 +33,8 @@ theme: /
                      log("[CheckAnswer] API returned", response, "entries");
 
                 if (!data || !data.length) {
-                    ctx.session.correct = false;
-                    ctx.session.correct_translations = "нет доступных переводов";
+                    $session.correct = false;
+                    $session.correct_translations = "нет доступных переводов";
                 } else {
                   // собираем первые 5 переводов
                     var meanings = data[0].meanings.slice(0,5)
@@ -49,7 +49,7 @@ theme: /
                 if ($session.correct) {
                     $session.correct_count++;
                 } else {
-                     ctx.session.wrong_count++;
+                     $session.wrong_count++;
                 }
                     
                     
