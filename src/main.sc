@@ -21,10 +21,11 @@ theme: /
     state: Translate
         q!: $regex<\w+> 
         script: var userAnswer = $request.query.toLowerCase();
+            
                 var word       = $session.word_to_translate;
                 var url        = "https://dictionary.skyeng.ru/api/public/v1/words/search?search=" + encodeURIComponent(word);
 
-                log("[CheckAnswer] userAnswer=", userAnswer);
+                log("[CheckAnswer] userAnswer=", $request.query);
 
              // **ВООЗВРАЩАЕМ** промис, чтобы движок подождал результата
                 return $http.query(url)
@@ -44,7 +45,7 @@ theme: /
                     $session.correct = meanings.indexOf(userAnswer) !== -1;
                     }
 
-                    log("[CheckAnswer] correct=", ctx.session.correct);
+                    log("[CheckAnswer] correct=", $session.correct);
 
                 if ($session.correct) {
                     $session.correct_count++;
