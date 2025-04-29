@@ -19,13 +19,14 @@ theme: /
         go: /Translate
 
     state: Translate
-        q!: $regex<\w+> 
-        script: var userAnswer = $request.query.toLowerCase();
+        q!: $regex<\w+>
+        
+        script: var userAnswer = $request.queryParams[0].toLowerCase()
             
                 var word       = $session.word_to_translate;
                 var url        = "https://dictionary.skyeng.ru/api/public/v1/words/search?search=" + encodeURIComponent(word);
 
-                log("[CheckAnswer] userAnswer=", $request.query);
+                log("[CheckAnswer] userAnswer=", $request.query, userAnswer);
 
              // **ВООЗВРАЩАЕМ** промис, чтобы движок подождал результата
                 return $http.query(url)
