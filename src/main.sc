@@ -16,12 +16,20 @@ theme: /
         #script: $session.word_to_translate = 'apple'
         script: log("word to translate " + $session.word_to_translate)
         a: {{$session.word_to_translate}}
-        go: /Translate
+        go: /TranslateInput
 
-    state: Translate
+    state: TranslateInput
         q: *
+        script: 
+            $session.userAnswer = $parseTree.text.toLowerCase();
+            log("User said:", $session.userAnswer);
+        go!: /TranslateProcess
+
+
+    state: TranslateProcess
         
-        script: var userAnswer = $request.query.toLowerCase()
+        script: 
+            var userAnswer = $session.userAnswer
             
                 var word       = $session.word_to_translate;
                 var url        = "https://dictionary.skyeng.ru/api/public/v1/words/search?search=" + encodeURIComponent(word);
