@@ -19,9 +19,9 @@ theme: /
         go: /Translate
 
     state: Translate
-        q!: $regex<\w+>
+        q: *
         
-        script: var userAnswer = $request.queryParams[0].toLowerCase()
+        script: var userAnswer = $request.query.toLowerCase()
             
                 var word       = $session.word_to_translate;
                 var url        = "https://dictionary.skyeng.ru/api/public/v1/words/search?search=" + encodeURIComponent(word);
